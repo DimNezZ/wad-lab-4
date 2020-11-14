@@ -1,5 +1,7 @@
 <?php
+
 namespace app\controllers;
+
 use yii\data\ActiveDataProvider;
 use app\models\LessonNum;
 use Yii;
@@ -7,7 +9,7 @@ use yii\helpers\Url;
 use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 
-class LessonnumController extends BaseController
+class LessonNumController extends BaseController
 {
 
     public function actionIndex()
@@ -15,41 +17,42 @@ class LessonnumController extends BaseController
         return new ActiveDataProvider(['query' => LessonNum::find()]);
     }
 
-    public function actionCreate()
+    /*public function actionCreate()
     {
-        $lessonnum = new LessonNum();
-        return $this->saveModel($lessonnum);
+        $day = new Gender();
+        return $this->saveModel($day);
     }
 
     public function actionUpdate($id)
     {
-        $lessonnum = $this->findModel($id);
-        return $this->saveModel($lessonnum);
-    }
+        $day = $this->findModel($id);
+        return $this->saveModel($day);
+    }*/
 
     public function actionView($id)
     {
         return $this->findModel($id);
     }
 
-    public function saveModel($lessonnum)
+    /*public function saveModel($day)
     {
-        if ($lessonnum->loadAndSave(Yii::$app->getRequest()->getBodyParams())) {
-        $response = Yii::$app->getResponse();
-        $response->setStatusCode(201);
-        $response->getHeaders()->set('Location', Url::toRoute(['view', 'id' => $lessonnum->getPrimaryKey()], true));
-} elseif (!$lessonnum->hasErrors()) {
+        if ($day->loadAndSave(Yii::$app->getRequest()->getBodyParams())) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+            $response->getHeaders()->set('Location',
+            Url::toRoute(['view', 'id' => $day->getPrimaryKey()], true));
+        } 
+        elseif (!$day->hasErrors()) {
             throw new
-            ServerErrorHttpException(serialize($lessonnum->getErrors()));
-        }
-        return $lessonnum;
-    }
-
+            ServerErrorHttpException(serialize($day->getErrors()));
+        }  
+        return $day;
+    }*/
     public function findModel($id)
     {
         $lessonnum = LessonNum::findOne($id);
         if ($lessonnum === null) {
-            throw new NotFoundHttpException("Special with ID $id not found");
+            throw new NotFoundHttpException("LessonNum with ID $id not found");
         }
         return $lessonnum;
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace app\controllers;
 
 use yii\data\ActiveDataProvider;
@@ -10,15 +9,12 @@ use yii\helpers\Url;
 use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 
-
 class GruppaController extends BaseController
 {
 
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => Gruppa::find()
-        ]);
+        return new ActiveDataProvider(['query' => Subject::find()]);
     }
 
     public function actionCreate()
@@ -38,6 +34,20 @@ class GruppaController extends BaseController
         return $this->findModel($id);
     }
 
+    public function saveModel($gruppa)
+    {
+        if ($gruppa->loadAndSave(Yii::$app->getRequest()->getBodyParams())) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+            $response->getHeaders()->set('Location',
+            Url::toRoute(['view', 'id' => $gruppa->getPrimaryKey()], true));
+        } 
+        elseif (!$gruppa->hasErrors()) {
+            throw new
+            ServerErrorHttpException(serialize($gruppa->getErrors()));
+        }  
+        return $gruppa;
+    }
     public function findModel($id)
     {
         $gruppa = Gruppa::findOne($id);
@@ -46,19 +56,5 @@ class GruppaController extends BaseController
         }
         return $gruppa;
     }
-
-    public function saveModel($gruppa)
-    {
-        if ($gruppa->loadAndSave(Yii::$app->getRequest()->getBodyParams())) {
-        $response = Yii::$app->getResponse();
-        $response->setStatusCode(201);
-        $response->getHeaders()->set('Location', Url::toRoute(['view', 'id' => $gruppa->getPrimaryKey()], true));
-        } elseif (!$gruppa->hasErrors()) {
-            throw new
-            ServerErrorHttpException(serialize($gruppa->getErrors()));
-        }
-        return $gruppa;
-
-    }
-
+   
 }
