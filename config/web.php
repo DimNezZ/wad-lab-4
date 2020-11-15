@@ -96,7 +96,6 @@ $config = [
             [
                 'class' => 'yii\rest\UrlRule',
                 'controller' => 'schedule',
-                'except' => ['delete'],
                 ],        
             ],
         ],
